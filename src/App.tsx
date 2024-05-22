@@ -7,6 +7,7 @@ import { default as theme } from './custom-theme.json';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 
 import { EchoStatusBar } from './components/EchoStatusBar';
+import { BasicCard } from './components/BasicCard';
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -16,14 +17,14 @@ function App(): React.JSX.Element {
       <Icon
         style={{ width: 32, height: 32 }}
         fill='#8F9BB3'
-        name='star' />
+        name='home-outline' />
     );
   };
 
   return (
     <>
       <IconRegistry icons={EvaIconsPack} />
-      <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
+      <ApplicationProvider {...eva} theme={{ ...eva.dark, ...theme }}>
         <EchoStatusBar />
         <Layout style={styles.container}>
           <Text style={styles.pinkText} category='h2'>Things go Here</Text>
@@ -39,7 +40,13 @@ function App(): React.JSX.Element {
             <Text category='s1' appearance='hint'>Hint Text</Text>
             <Divider />
             <Text category='s1' appearance='alternative'>Alternative Text</Text>
+          </Layout>
 
+          <Layout level='1'
+            style={{ flexDirection: 'row' }}
+          >
+            <BasicCard />
+            <BasicCard />
           </Layout>
         </Layout>
       </ApplicationProvider >
