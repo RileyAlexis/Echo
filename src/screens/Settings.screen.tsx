@@ -1,10 +1,12 @@
 import React from "react";
-import { Text } from '@ui-kitten/components';
+import { Text, Layout } from '@ui-kitten/components';
 
 export const SettingsScreen: React.FC = () => {
     return (
-        <Text>
-            Settings Screen
-        </Text>
+        <Layout style={{ flex: 1 }}>
+            <Text>
+                Settings Screen
+            </Text>
+        </Layout>
     )
 }
