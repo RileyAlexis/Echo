@@ -8,6 +8,9 @@ import { EvaIconsPack } from '@ui-kitten/eva-icons';
 
 import { EchoStatusBar } from './components/EchoStatusBar';
 import { BasicCard } from './components/BasicCard';
+import { NavigationContainer } from '@react-navigation/native';
+
+import { BottomTabsNavigator } from './screens/BottomTabs.navigator';
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -25,30 +28,33 @@ function App(): React.JSX.Element {
     <>
       <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider {...eva} theme={{ ...eva.dark, ...theme }}>
-        <EchoStatusBar />
-        <Layout style={styles.container}>
-          <Text style={styles.pinkText} category='h2'>Things go Here</Text>
-          <Divider />
-          <Button
-            accessoryLeft={homeIcon}
-            style={{ margin: 15 }}>Home</Button>
-          <Layout level='2'>
-            <Text category='s1'>This is some text inside another layout box which should have
-              a different background taken from the theme</Text>
-          </Layout>
-          <Layout level='3' style={{ padding: 5, margin: 10 }}>
-            <Text category='s1' appearance='hint'>Hint Text</Text>
+        <NavigationContainer>
+          {/* <BottomTabsNavigator /> */}
+          <EchoStatusBar />
+          <Layout style={styles.container}>
+            <Text style={styles.pinkText} category='h2'>Things go Here</Text>
             <Divider />
-            <Text category='s1' appearance='alternative'>Alternative Text</Text>
-          </Layout>
+            <Button
+              accessoryLeft={homeIcon}
+              style={{ margin: 15 }}>Home</Button>
+            <Layout level='2'>
+              <Text category='s1'>This is some text inside another layout box which should have
+                a different background taken from the theme</Text>
+            </Layout>
+            <Layout level='3' style={{ padding: 5, margin: 10 }}>
+              <Text category='s1' appearance='hint'>Hint Text</Text>
+              <Divider />
+              <Text category='s1' appearance='alternative'>Alternative Text</Text>
+            </Layout>
 
-          <Layout level='1'
-            style={{ flexDirection: 'row' }}
-          >
-            <BasicCard />
-            <BasicCard />
+            <Layout level='1'
+              style={{ flexDirection: 'row' }}
+            >
+              <BasicCard />
+              <BasicCard />
+            </Layout>
           </Layout>
-        </Layout>
+        </NavigationContainer>
       </ApplicationProvider >
     </>
 
