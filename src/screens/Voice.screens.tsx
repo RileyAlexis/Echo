@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Platform, PermissionsAndroid } from "react-native";
-import { Button, Layout, Text, Modal } from "@ui-kitten/components";
+import { Platform, PermissionsAndroid, Alert } from "react-native";
+import { Button, Layout, Text, Modal, Card } from "@ui-kitten/components";
+import { PERMISSIONS } from "react-native-permissions";
 import { styles } from "../styles/styles";
 
 //Voice Imports
@@ -14,9 +15,33 @@ export const VoiceScreen: React.FC = () => {
     const [end, setEnd] = useState('');
     const [started, setStarted] = useState('');
     const [results, setResults] = useState<string[]>([]);
-    const [partialResults, setPartialResults] = useState<string[]>([]);
+    let engines: any;
+
+    const [stuff, setStuff] = useState('');
 
     const [showModal, setShowModal] = useState(false);
+
+    useEffect(() => {
+        Voice.isAvailable()
+            .then((available) => {
+                if (available) {
+                    // Get the list of available speech recognition capabilities
+                    Voice.getSpeechRecognitionServices()
+                        .then((services: any) => {
+                            console.log('Available speech recognition services:', services);
+                        })
+                        .catch((error: any) => {
+                            console.error('Failed to get speech recognition services:', error);
+                        });
+                } else {
+                    console.log('Speech recognition is not available on this device.');
+                }
+            })
+            .catch((error) => {
+                console.error('Failed to check speech recognition availability:', error);
+            });
+    }, [])
+
 
     useEffect(() => {
         Voice.onSpeechStart = onSpeechStart;
@@ -24,37 +49,15 @@ export const VoiceScreen: React.FC = () => {
         Voice.onSpeechEnd = onSpeechEnd;
         Voice.onSpeechError = onSpeechError;
         Voice.onSpeechResults = onSpeechResults;
-        Voice.onSpeechPartialResults = onSpeechPartialResults;
         Voice.onSpeechVolumeChanged = onSpeechVolumeChanged;
-
-        if (Platform.OS === 'android') {
-            requestAudioPermission();
-        }
 
         return () => {
             Voice.destroy().then(Voice.removeAllListeners);
         };
     }, []);
 
-    const requestAudioPermission = async () => {
-        try {
-            const granted = await PermissionsAndroid.request(
-                PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
-                {
-                    title: 'Audio Permission',
-                    message: 'App needs access to your microphone to detect keywords',
-                    buttonNeutral: 'Ask Me Later',
-                    buttonNegative: 'Cancel',
-                    buttonPositive: 'OK',
-                }
-            );
-            if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
-                console.log('Audio permission denied');
-            }
-        } catch (err) {
-            console.warn(err);
-        }
-    };
+
+
 
     const onSpeechStart = (e: any) => {
         setStarted('√');
@@ -74,16 +77,15 @@ export const VoiceScreen: React.FC = () => {
 
     const onSpeechResults = (e: any) => {
         setResults(e.value);
-        if (e.value.some((text: string) => text.toLowerCase().includes('your keyword'))) {
+        if (e.value.some((text: string) => text.toLowerCase().includes('keyword'))) {
             // Perform action when keyword is detected
             // alert('Keyword detected!');
             setShowModal(true);
+            setStuff('Keyword Triggered');
+            setResults([]);
         }
     };
 
-    const onSpeechPartialResults = (e: any) => {
-        setPartialResults(e.value);
-    };
 
     const onSpeechVolumeChanged = (e: any) => {
         setPitch(e.value);
@@ -97,7 +99,6 @@ export const VoiceScreen: React.FC = () => {
             setError('');
             setStarted('');
             setResults([]);
-            setPartialResults([]);
             setEnd('');
         } catch (e) {
             console.error(e);
@@ -112,13 +113,25 @@ export const VoiceScreen: React.FC = () => {
         }
     };
 
+    // useEffect(() => {
+    //     for (let i in results) {
+    //         if (results[i] === 'keyword' || 'Keyword') {
+    //             Alert.alert('Keyword');
+    //             setStuff('Keyword Triggered')
+
+    //         }
+    //     }
+    // }, [results])
+
 
 
     return (
         <Layout style={styles.container}>
             <Modal visible={showModal}>
-                <Text>Keyword Detected</Text>
-                <Button onPress={() => setShowModal(false)}>Dismiss</Button>
+                <Card disabled={true}>
+                    <Text>Keyword Detected</Text>
+                    <Button onPress={() => setShowModal(false)}>Dismiss</Button>
+                </Card>
             </Modal>
             <Text>Press the button and say your keyword</Text>
             <Button onPress={startRecognizing}>Start Recognizing</Button>
@@ -128,8 +141,9 @@ export const VoiceScreen: React.FC = () => {
             <Text>Pitch: {pitch}</Text>
             <Text>Error: {error}</Text>
             <Text>Results: {results.join(', ')}</Text>
-            <Text>Partial Results: {partialResults.join(', ')}</Text>
             <Text>End: {end}</Text>
+            <Text>Stuff: {stuff}</Text>
+            <Text>Engines: {engines}</Text>
         </Layout>
     )
 }
