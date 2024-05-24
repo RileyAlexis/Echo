@@ -1,11 +1,15 @@
 import React from "react";
 import { Layout, Divider, Button, Text, Icon, IconElement } from '@ui-kitten/components';
-import { StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 
-import { EchoStatusBar } from "../components/EchoStatusBar";
+import { styles } from "../styles/styles";
 import { BasicCard } from "../components/BasicCard";
 
-export const HomeScreen: React.FC = () => {
+interface HomeScreenProps {
+    navigation: any
+}
+
+export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 
     const homeIcon = (): IconElement => {
         return (
@@ -16,8 +20,19 @@ export const HomeScreen: React.FC = () => {
         );
     };
 
+    const navigateSettings = () => {
+        navigation.navigate('Settings');
+    }
+
     return (
         <>
+            {/* <TopNavigation title="Echo" alignment="center" />
+            <Divider />
+            <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <Button onPress={navigateSettings}>Settings</Button>
+
+            </Layout> */}
+
             <Layout style={styles.container}>
                 <Text style={styles.pinkText} category='h2'>Things go Here</Text>
                 <Divider />
@@ -44,19 +59,3 @@ export const HomeScreen: React.FC = () => {
         </>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    mainView: {
-        marginVertical: 10,
-        marginHorizontal: 10
-    },
-    pinkText: {
-        color: '#ff00cb',
-        padding: 15
-    }
-});

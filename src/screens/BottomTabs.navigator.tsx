@@ -12,5 +12,6 @@ export const BottomTabsNavigator: React.FC = () => {
             <Tabs.Screen name="Home" component={HomeScreen} />
             <Tabs.Screen name="Settings" component={SettingsScreen} />
         </Tabs.Navigator>
+
     )
 }
