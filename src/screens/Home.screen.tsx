@@ -1,9 +1,6 @@
 import React from "react";
 
-import { check, request, PERMISSIONS, RESULTS } from '@react-native-community/permissions';
-
 import { Layout, Divider, Button, Text, Icon, IconElement } from '@ui-kitten/components';
-import { SafeAreaView, StyleSheet } from "react-native";
 
 import { styles } from "../styles/styles";
 import { BasicCard } from "../components/BasicCard";
@@ -23,9 +20,9 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         );
     };
 
-    const navigateSettings = () => {
-        navigation.navigate('Settings');
-    }
+    // const navigateSettings = () => {
+    //     navigation.navigate('Settings');
+    // }
 
     return (
         <>

@@ -1,6 +1,5 @@
 import React from "react";
 import { Text, Layout, Icon, TopNavigation, TopNavigationAction, IconElement, Button } from '@ui-kitten/components';
-import { SafeAreaView } from "react-native-safe-area-context";
 
 import { styles } from "../styles/styles";
 
