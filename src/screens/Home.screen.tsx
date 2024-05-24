@@ -1,4 +1,7 @@
 import React from "react";
+
+import { check, request, PERMISSIONS, RESULTS } from '@react-native-community/permissions';
+
 import { Layout, Divider, Button, Text, Icon, IconElement } from '@ui-kitten/components';
 import { SafeAreaView, StyleSheet } from "react-native";
 
