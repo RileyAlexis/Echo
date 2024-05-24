@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Platform, PermissionsAndroid, Alert } from "react-native";
+import { Platform } from "react-native";
 import { Button, Layout, Text, Modal, Card } from "@ui-kitten/components";
 import { PERMISSIONS } from "react-native-permissions";
 import { styles } from "../styles/styles";
@@ -21,26 +21,27 @@ export const VoiceScreen: React.FC = () => {
 
     const [showModal, setShowModal] = useState(false);
 
-    useEffect(() => {
-        Voice.isAvailable()
-            .then((available) => {
-                if (available) {
-                    // Get the list of available speech recognition capabilities
-                    Voice.getSpeechRecognitionServices()
-                        .then((services: any) => {
-                            console.log('Available speech recognition services:', services);
-                        })
-                        .catch((error: any) => {
-                            console.error('Failed to get speech recognition services:', error);
-                        });
-                } else {
-                    console.log('Speech recognition is not available on this device.');
-                }
-            })
-            .catch((error) => {
-                console.error('Failed to check speech recognition availability:', error);
-            });
-    }, [])
+    // useEffect(() => {
+    //     Voice.isAvailable()
+    //         .then((available) => {
+    //             console.log("Available", available);
+    //             if (available && Platform.OS === 'android') {
+    //                 // Get the list of available speech recognition capabilities
+    //                 Voice.getSpeechRecognitionServices()
+    //                     .then((services: any) => {
+    //                         console.log('Available speech recognition services:', services);
+    //                     })
+    //                     .catch((error: any) => {
+    //                         console.error('Failed to get speech recognition services:', error);
+    //                     });
+    //             } else if (!available && Platform.OS === 'android') {
+    //                 console.log('Speech recognition is not available on this device.');
+    //             }
+    //         })
+    //         .catch((error) => {
+    //             console.error('Failed to check speech recognition availability:', error);
+    //         });
+    // }, []);
 
 
     useEffect(() => {
@@ -55,9 +56,6 @@ export const VoiceScreen: React.FC = () => {
             Voice.destroy().then(Voice.removeAllListeners);
         };
     }, []);
-
-
-
 
     const onSpeechStart = (e: any) => {
         setStarted('√');
