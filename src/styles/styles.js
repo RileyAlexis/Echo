@@ -20,5 +20,13 @@ export const styles = StyleSheet.create({
     image: {
         height: 250,
         width: 250
+    },
+    scrollView: {
+        flex: 1,
+    },
+    contentContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
     }
 });

@@ -1,6 +1,7 @@
-import React from "react";
-import { View, Image, StyleSheet, Dimensions, SafeAreaView } from 'react-native';
-import { Layout } from "@ui-kitten/components";
+import React, { useState } from "react";
+import { View, Image, StyleSheet, Dimensions, ScrollView } from 'react-native';
+import { PinchGestureHandler, State } from 'react-native-gesture-handler';
+import Animated, { useSharedValue, useAnimatedStyle, withTiming, Easing } from 'react-native-reanimated';
 
 import { groundMap01 } from "../modules/terrain";
 
@@ -8,10 +9,14 @@ const { width, height } = Dimensions.get('window');
 
 export const RenderMap: React.FC = () => {
 
+    const scale = useSharedValue(1);
     const grass = require('../../assets/tiles/tilable-IMG_0044-grey.png');
     const rock = require('../../assets/tiles/rock.png')
     const tileWidth = 128;
     const tileHeight = 64;
+
+
+    // const onPinchEvent = Animated.event
 
 
     return (
