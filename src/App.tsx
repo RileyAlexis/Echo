@@ -2,6 +2,7 @@ import React from 'react';
 import { useColorScheme } from 'react-native';
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { default as theme } from './custom-theme.json';
 import { EvaIconsPack } from '@ui-kitten/eva-icons'
 
@@ -14,7 +15,9 @@ function App(): React.JSX.Element {
   return (
     <ApplicationProvider {...eva} theme={{ ...eva.dark, ...theme }}>
       <IconRegistry icons={EvaIconsPack} />
-      <AppNavigator />
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <AppNavigator />
+      </GestureHandlerRootView>
     </ApplicationProvider>
   );
 };
