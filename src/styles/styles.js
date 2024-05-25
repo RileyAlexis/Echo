@@ -16,5 +16,9 @@ export const styles = StyleSheet.create({
     pinkText: {
         color: '#ff00cb',
         padding: 15
+    },
+    image: {
+        height: 250,
+        width: 250
     }
 });

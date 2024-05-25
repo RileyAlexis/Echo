@@ -1,5 +1,4 @@
 import React from "react";
-
 import { Layout, Divider, Button, Text, Icon, IconElement } from '@ui-kitten/components';
 
 import { styles } from "../styles/styles";

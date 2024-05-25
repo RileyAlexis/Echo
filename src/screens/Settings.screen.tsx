@@ -1,7 +1,9 @@
 import React from "react";
-import { Text, Layout, Icon, TopNavigation, TopNavigationAction, IconElement, Button } from '@ui-kitten/components';
-
+import { Text, Layout, Icon, TopNavigationAction, IconElement, Button } from '@ui-kitten/components';
+import { Image } from 'react-native';
 import { styles } from "../styles/styles";
+
+import { RenderMap } from "../components/RenderMap";
 
 interface SettingsProps {
     navigation: any;
@@ -33,13 +35,9 @@ export const SettingsScreen: React.FC<SettingsProps> = ({ navigation }) => {
                 <Text>
                     Settings Screen
                 </Text>
-                <Layout>
-                    <Button onPress={navigateBack}>Back</Button>
-                </Layout>
-                <Text>
-                    {navigation.index}
-                </Text>
+                <RenderMap />
             </Layout>
         </>
     );
 };
+
