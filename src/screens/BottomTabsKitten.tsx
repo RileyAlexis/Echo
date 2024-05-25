@@ -9,6 +9,7 @@ import { NavigationContainer } from "@react-navigation/native";
 
 import { styles } from "../styles/styles";
 import { VoiceScreen } from "./Voice.screens";
+import { AnimationScreen } from "./Animation.screen";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -27,6 +28,7 @@ const BottomTabBar: React.FC<BottomTabBarProps> = ({ navigation, state }) => (
         <BottomNavigationTab title={evaProps => <Text {...evaProps}>Home</Text>} />
         <BottomNavigationTab title="Settings" />
         <BottomNavigationTab title="Voice" />
+        <BottomNavigationTab title="Animation" />
     </BottomNavigation>
 )
 
@@ -37,6 +39,7 @@ const TabNavigator = () => (
         <Screen name="Home" component={HomeScreen} />
         <Screen name="Settings" component={SettingsScreen} />
         <Screen name="Voice" component={VoiceScreen} />
+        <Screen name="Animation" component={AnimationScreen} />
     </Navigator >
 );
 
