@@ -11,7 +11,9 @@ import Animated, {
     useAnimatedStyle,
     useAnimatedProps,
     Easing,
-    withRepeat
+    withRepeat,
+    withSequence,
+    withDelay
 } from 'react-native-reanimated';
 
 export const AnimationScreen: React.FC = () => {
@@ -20,21 +22,34 @@ export const AnimationScreen: React.FC = () => {
     const translateX = useSharedValue<number>(0);
     const translateY = useSharedValue<number>(0);
     const offset = useSharedValue<number>(0);
-    const shakerOffset = 40;
+    const shakerOffset = 15;
+    const shakerTimer = 150;
+    const shakerDelay = 100;
     const r = useSharedValue(10);
     const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
     const moveRight = () => {
         translateX.value = withSpring(translateX.value + 50);
-        offset.value = withTiming(shakerOffset);
         // translateX.value = withSpring(translateX.value + 50);
     }
 
     const moveLeft = () => {
         translateX.value = withSpring(translateX.value - 50);
-        offset.value = withTiming(-shakerOffset);
         // translateX.value = withTiming(translateX.value - 50);
     }
+
+    const shakeTheBox = () => {
+        offset.value =
+            withDelay(shakerDelay,
+                withSequence(
+                    // start from -shakerOffset (minus)
+                    withTiming(-shakerOffset, { duration: shakerTimer / 2 }),
+                    // shake between -shakerOffset and +shakerOffset 5 times
+                    withRepeat(withTiming(shakerOffset, { duration: shakerTimer }), 6, true),
+                    // go back to 0 at the end of the animation - withTiming(0) resets it to starting point
+                    withTiming(0, { duration: shakerTimer / 2 })
+                ));
+    };
 
     const shakerThing = useAnimatedStyle(() => ({
         transform: [{ translateX: offset.value }],
@@ -88,6 +103,9 @@ export const AnimationScreen: React.FC = () => {
                     }}>
                     <Button style={styles2.button} onPress={moveLeft}>Left</Button>
                     <Button style={styles2.button} onPress={moveRight}>Right</Button>
+                    <Animated.View style={shakerThing}>
+                        <Button style={styles2.button} onPress={shakeTheBox}>Shaker</Button>
+                    </Animated.View>
                     {/* <Button style={styles2.button} onPress={moveCircle}>Move Circle</Button> */}
                 </View>
                 <Svg style={styles2.circle}>
