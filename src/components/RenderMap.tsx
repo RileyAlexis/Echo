@@ -32,7 +32,12 @@ export const RenderMap: React.FC = () => {
                         <Image
                             key={`${rowIndex}-${colIndex}`}
                             source={tile === 0 ? rock : grass}
-                            style={[styles.tile, { left: x + sharedWidth.value / 2, top: y, width: tileWidth, height: tileHeight }]}
+                            style={[styles.tile, {
+                                left: x + sharedWidth.value / 2,
+                                top: y,
+                                width: tileWidth,
+                                height: tileHeight
+                            }]}
                         />
                     );
                 })

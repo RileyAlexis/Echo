@@ -4,7 +4,7 @@ import { styles } from "../styles/styles";
 
 import { RenderMap } from "../components/RenderMap";
 
-interface SettingsProps {
+interface IsomorphProps {
     navigation: any;
 }
 
@@ -17,7 +17,7 @@ const BackIcon: React.FC = (): IconElement => {
 };
 
 
-export const SettingsScreen: React.FC<SettingsProps> = ({ navigation }) => {
+export const Isomorph: React.FC<IsomorphProps> = ({ navigation }) => {
 
     const navigateBack = () => {
         navigation.goBack();

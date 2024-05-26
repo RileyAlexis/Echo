@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { BottomNavigation, BottomNavigationTab, Text } from "@ui-kitten/components";
 
 import { HomeScreen } from "./Home.screen";
-import { SettingsScreen } from "./Settings.screen";
+import { Isomorph } from "./Isomorph.screen";
 import { NavigationContainer } from "@react-navigation/native";
 
 import { styles } from "../styles/styles";
@@ -26,7 +26,7 @@ const BottomTabBar: React.FC<BottomTabBarProps> = ({ navigation, state }) => (
         style={styles.bottomTabs}
     >
         <BottomNavigationTab title={evaProps => <Text {...evaProps}>Home</Text>} />
-        <BottomNavigationTab title="Settings" />
+        <BottomNavigationTab title="Isomorph" />
         <BottomNavigationTab title="Voice" />
         <BottomNavigationTab title="Animation" />
     </BottomNavigation>
@@ -37,7 +37,7 @@ const TabNavigator = () => (
         screenOptions={{ headerShown: false }}
     >
         <Screen name="Home" component={HomeScreen} />
-        <Screen name="Settings" component={SettingsScreen} />
+        <Screen name="Isomorph" component={Isomorph} />
         <Screen name="Voice" component={VoiceScreen} />
         <Screen name="Animation" component={AnimationScreen} />
     </Navigator >
