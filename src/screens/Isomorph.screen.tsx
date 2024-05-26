@@ -3,6 +3,7 @@ import { Layout, Icon, TopNavigationAction, IconElement } from '@ui-kitten/compo
 import { styles } from "../styles/styles";
 
 import { RenderMap } from "../components/RenderMap";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 interface IsomorphProps {
     navigation: any;

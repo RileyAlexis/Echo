@@ -16,6 +16,8 @@ import Animated, {
     withDelay
 } from 'react-native-reanimated';
 
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
+
 export const AnimationScreen: React.FC = () => {
 
     const width = useSharedValue<number>(100);
@@ -25,7 +27,9 @@ export const AnimationScreen: React.FC = () => {
     const shakerOffset = 15;
     const shakerTimer = 150;
     const shakerDelay = 100;
+    const panOffset = useSharedValue(0);
     const r = useSharedValue(10);
+    const pressedTap = useSharedValue(false);
     const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
     const moveRight = () => {
@@ -85,6 +89,25 @@ export const AnimationScreen: React.FC = () => {
         r.value += 10;
     }
 
+    const pan = Gesture.Pan()
+        .onBegin(() => {
+            pressedTap.value = true;
+        })
+        .onChange((event) => {
+            panOffset.value = event.translationX;
+        })
+        .onFinalize(() => {
+            panOffset.value = withSpring(0);
+            pressedTap.value = false;
+        });
+
+    const animatePan = useAnimatedStyle(() => ({
+        backgroundColor: pressedTap.value ? '#FFE04B' : '#B58DF1',
+        transform: [
+            { translateX: panOffset.value },
+            { scale: withTiming(pressedTap.value ? 1.2 : 1) }],
+    }));
+
     return (
         <SafeAreaView>
             <View style={[styles2.container, { backgroundColor: 'darkgray' }]}>
@@ -94,6 +117,9 @@ export const AnimationScreen: React.FC = () => {
                 </View>
                 <View style={{ marginTop: 100 }}>
                     <Animated.View style={[styles2.box3, shakerThing]} />
+                    <GestureDetector gesture={pan}>
+                        <Animated.View style={[styles2.circle, animatePan]} />
+                    </GestureDetector>
                 </View>
                 <View
                     style={{
@@ -150,13 +176,15 @@ const styles2 = StyleSheet.create({
         height: 50,
         borderRadius: 20
     },
+    circle: {
+        width: 70,
+        height: 70,
+        borderRadius: 30
+    },
     button: {
         position: 'relative',
         // top: 200,
         height: 60,
         margin: 20
-    },
-    circle: {
-        zIndex: 0
     }
 })

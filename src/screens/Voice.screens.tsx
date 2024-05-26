@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Layout, Text, Modal, Card } from "@ui-kitten/components";
 import { styles } from "../styles/styles";
+import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 
 //Voice Imports
 import Voice from '@react-native-voice/voice';
@@ -91,13 +92,17 @@ export const VoiceScreen: React.FC = () => {
         }
     };
 
+    const TriggerModal = gestureHandlerRootHOC(() => (
+        <Card disabled={true}>
+            <Text>Keyword Detected</Text>
+            <Button onPress={() => setShowModal(false)}>Dismiss</Button>
+        </Card>
+    ));
+
     return (
         <Layout style={styles.container}>
             <Modal visible={showModal}>
-                <Card disabled={true}>
-                    <Text>Keyword Detected</Text>
-                    <Button onPress={() => setShowModal(false)}>Dismiss</Button>
-                </Card>
+                <TriggerModal />
             </Modal>
             <Text>Press the button and say your keyword</Text>
             <Button onPress={startRecognizing}>Start Recognizing</Button>
