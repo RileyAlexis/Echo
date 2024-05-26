@@ -13,24 +13,31 @@ import Animated, {
     Easing,
     withRepeat,
     withSequence,
-    withDelay
+    withDelay,
+    withDecay
 } from 'react-native-reanimated';
 
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 
 export const AnimationScreen: React.FC = () => {
 
-    const width = useSharedValue<number>(100);
     const translateX = useSharedValue<number>(0);
     const translateY = useSharedValue<number>(0);
+    const width = useSharedValue(0);
     const offset = useSharedValue<number>(0);
     const shakerOffset = 15;
     const shakerTimer = 150;
     const shakerDelay = 100;
+    const panSize = 120;
     const panOffset = useSharedValue(0);
     const r = useSharedValue(10);
     const pressedTap = useSharedValue(false);
+    const elasticTap = useSharedValue(false);
     const AnimatedCircle = Animated.createAnimatedComponent(Circle);
+
+    const onLayout = (event) => {
+        width.value += event.nativeEvent.layout.width;
+    }
 
     const moveRight = () => {
         translateX.value = withSpring(translateX.value + 50);
@@ -90,14 +97,21 @@ export const AnimationScreen: React.FC = () => {
     }
 
     const pan = Gesture.Pan()
-        .onBegin(() => {
+        .onBegin((event) => {
             pressedTap.value = true;
         })
         .onChange((event) => {
-            panOffset.value = event.translationX;
+            // panOffset.value = event.translationX;
+            panOffset.value = event.changeX;
         })
-        .onFinalize(() => {
-            panOffset.value = withSpring(0);
+        .onFinalize((event) => {
+            panOffset.value = withDecay({
+                velocity: event.velocityX,
+                rubberBandEffect: true,
+
+                clamp: [-(width.value / 2) + panSize / 2, width.value / 2 - panSize / 2],
+            })
+            // panOffset.value = withSpring(0);
             pressedTap.value = false;
         });
 
@@ -109,42 +123,50 @@ export const AnimationScreen: React.FC = () => {
     }));
 
     return (
-        <SafeAreaView>
-            <View style={[styles2.container, { backgroundColor: 'darkgray' }]}>
-                <View style={{ flexDirection: 'row' }}>
-                    <Animated.View style={[styles2.box, animatedElasticStyles]} />
-                    <Animated.View style={[styles2.box2, animatedSpringStyles]} />
-                </View>
-                <View style={{ marginTop: 100 }}>
-                    <Animated.View style={[styles2.box3, shakerThing]} />
-                    <GestureDetector gesture={pan}>
-                        <Animated.View style={[styles2.circle, animatePan]} />
-                    </GestureDetector>
-                </View>
-                <View
-                    style={{
-                        marginTop: 400,
-                        alignItems: 'flex-start',
-                        justifyContent: 'space-between'
-                    }}>
-                    <Button style={styles2.button} onPress={moveLeft}>Left</Button>
-                    <Button style={styles2.button} onPress={moveRight}>Right</Button>
-                    <Animated.View style={shakerThing}>
-                        <Button style={styles2.button} onPress={shakeTheBox}>Shaker</Button>
-                    </Animated.View>
-                    {/* <Button style={styles2.button} onPress={moveCircle}>Move Circle</Button> */}
-                </View>
+        <View style={[styles2.container, { backgroundColor: 'darkgray' }]}>
+            <View style={{
+                flexDirection: 'column',
+                borderWidth: 2,
+                borderColor: 'pink',
+                alignItems: 'center',
+                justifyContent: 'center'
+            }}>
+                <Animated.View style={[styles2.box, animatedElasticStyles]} />
+                <Animated.View style={[styles2.box2, animatedSpringStyles]} />
+                <Animated.View style={[styles2.box3, shakerThing]} />
+
+                <GestureDetector gesture={pan}>
+                    <Animated.View style={[styles2.circle, animatePan]} />
+                </GestureDetector>
                 <Svg style={styles2.circle}>
                     <AnimatedCircle
-                        cx="40%"
-                        cy="40%"
-                        fill="violet"
+                        cx="50%"
+                        cy="50%"
+                        fill="orange"
                         animatedProps={animatedProps}
                     />
                 </Svg>
-
             </View>
-        </SafeAreaView >
+
+            <View
+                style={{
+                    marginTop: 5,
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    borderWidth: 1,
+                    borderColor: 'black'
+                }}>
+                <Button style={styles2.button} onPress={moveLeft}>Left</Button>
+                <Button style={styles2.button} onPress={moveRight}>Right</Button>
+
+                <Animated.View style={shakerThing}>
+                    <Button style={styles2.button} onPress={shakeTheBox}>Shaker</Button>
+                </Animated.View>
+
+                <Button style={styles2.button} onPress={moveCircle}>Move Circle</Button>
+            </View>
+
+        </View>
 
     )
 }
@@ -152,39 +174,43 @@ export const AnimationScreen: React.FC = () => {
 const styles2 = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: 30,
+        marginTop: 0,
         justifyContent: 'center',
         alignItems: 'center',
-        flexDirection: 'column',
-        flexWrap: 'wrap'
+        borderWidth: 2,
+        borderColor: 'blue'
     },
     box: {
         backgroundColor: 'violet',
         width: 50,
         height: 50,
-        borderRadius: 20
+        borderRadius: 20,
+        margin: 10
     },
     box2: {
         backgroundColor: 'green',
         width: 50,
         height: 50,
-        borderRadius: 20
+        borderRadius: 20,
+        margin: 10
+
     },
     box3: {
         backgroundColor: 'purple',
         width: 50,
         height: 50,
-        borderRadius: 20
+        borderRadius: 20,
+        margin: 10
     },
     circle: {
-        width: 70,
-        height: 70,
-        borderRadius: 30
+        width: 50,
+        height: 50,
+        borderRadius: 30,
+        margin: 10
+
     },
     button: {
-        position: 'relative',
-        // top: 200,
-        height: 60,
-        margin: 20
+        height: 50,
+        margin: 5
     }
 })
