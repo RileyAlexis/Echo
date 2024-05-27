@@ -3,7 +3,6 @@ import { Layout, Icon, TopNavigationAction, IconElement } from '@ui-kitten/compo
 import { styles } from "../styles/styles";
 
 import { RenderMap } from "../components/RenderMap";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { DraggableBox } from "../components/DraggableBox";
 
 interface IsomorphProps {
@@ -18,7 +17,6 @@ const BackIcon: React.FC = (): IconElement => {
     );
 };
 
-
 export const Isomorph: React.FC<IsomorphProps> = ({ navigation }) => {
 
     const navigateBack = () => {
@@ -28,7 +26,6 @@ export const Isomorph: React.FC<IsomorphProps> = ({ navigation }) => {
     const BackAction = () => (
         <TopNavigationAction icon={BackIcon} onPress={navigateBack} />
     );
-
 
     return (
         <Layout style={styles.containerCentered}>

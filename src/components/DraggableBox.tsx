@@ -1,14 +1,12 @@
 import React, { ReactNode } from "react";
-import { Layout } from "@ui-kitten/components";
-import { StyleSheet } from "react-native";
-import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
-import { Gesture, GestureDetector, PanGestureHandler } from "react-native-gesture-handler";
-
-import { styles } from "../styles/styles";
+import Animated, { useAnimatedStyle, useSharedValue, withSpring, SharedValue } from "react-native-reanimated";
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
 
 type DraggableBoxProps = {
     children: ReactNode
 }
+
+
 
 export const DraggableBox: React.FC<DraggableBoxProps> = ({ children }) => {
     const boxX = useSharedValue(0);
@@ -16,6 +14,7 @@ export const DraggableBox: React.FC<DraggableBoxProps> = ({ children }) => {
     const boxOffsetX = useSharedValue(0);
     const boxOffsetY = useSharedValue(0);
     const scale = useSharedValue(1);
+    const savedScale = useSharedValue(1);
     const focalX = useSharedValue(0);
     const focalY = useSharedValue(0);
 
@@ -41,15 +40,23 @@ export const DraggableBox: React.FC<DraggableBoxProps> = ({ children }) => {
 
     const pinchBox = Gesture.Pinch()
         .onUpdate((event) => {
-            scale.value = event.scale;
-            focalX.value = event.focalX;
-            focalY.value = event.focalY;
+            scale.value = savedScale.value * event.scale;
+            // focalX.value = event.focalX;
+            // focalY.value = event.focalY;
         })
         .onEnd(() => {
-            scale.value = withSpring(1);
+            savedScale.value = scale.value;
         });
 
-    const composedGesture = Gesture.Simultaneous(panRedBox, pinchBox);
+    const doubleTap = Gesture.Tap()
+        .numberOfTaps(2)
+        .onStart(() => {
+            scale.value = 1;
+            savedScale.value = 1;
+        });
+
+
+    const composedGesture = Gesture.Simultaneous(panRedBox, pinchBox, doubleTap);
 
     return (
         <GestureDetector gesture={composedGesture}>

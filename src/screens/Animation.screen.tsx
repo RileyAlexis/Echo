@@ -36,8 +36,8 @@ const local = StyleSheet.create({
         justifyContent: 'center'
     },
     redBox: {
-        width: 70,
-        height: 70,
+        width: 120,
+        height: 120,
         backgroundColor: 'crimson',
         borderRadius: 20
     }
