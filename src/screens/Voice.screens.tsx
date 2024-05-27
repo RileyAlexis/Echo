@@ -100,7 +100,7 @@ export const VoiceScreen: React.FC = () => {
     ));
 
     return (
-        <Layout style={styles.container}>
+        <Layout style={styles.containerCentered}>
             <Modal visible={showModal}>
                 <TriggerModal />
             </Modal>

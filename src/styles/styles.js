@@ -1,10 +1,13 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-    container: {
+    containerCentered: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    containerBasic: {
+        flex: 1
     },
     bottomTabs: {
         height: 65,

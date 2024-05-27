@@ -32,7 +32,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 
             </Layout> */}
 
-            <Layout style={styles.container}>
+            <Layout style={styles.containerCentered}>
                 <Text style={styles.pinkText} category='h2'>Things go Here</Text>
                 <Divider />
                 <Button

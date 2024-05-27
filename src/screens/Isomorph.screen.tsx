@@ -30,7 +30,7 @@ export const Isomorph: React.FC<IsomorphProps> = ({ navigation }) => {
 
 
     return (
-        <Layout style={styles.container}>
+        <Layout style={styles.containerCentered}>
             <RenderMap />
         </Layout>
     );
