@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { Layout } from "@ui-kitten/components";
 import { StyleSheet } from "react-native";
 import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
@@ -6,7 +6,11 @@ import { Gesture, GestureDetector, PanGestureHandler } from "react-native-gestur
 
 import { styles } from "../styles/styles";
 
-export const DraggableBox: React.FC = () => {
+type DraggableBoxProps = {
+    children: ReactNode
+}
+
+export const DraggableBox: React.FC<DraggableBoxProps> = ({ children }) => {
     const redBoxX = useSharedValue(0);
     const redBoxY = useSharedValue(0);
     const redBoxOffsetX = useSharedValue(0);
@@ -30,25 +34,9 @@ export const DraggableBox: React.FC = () => {
 
     return (
         <GestureDetector gesture={panRedBox}>
-            <Animated.View style={[local.redBox, redBoxAnimation]} />
+            <Animated.View style={redBoxAnimation}>
+                {children}
+            </Animated.View>
         </GestureDetector>
     )
 }
-
-const local = StyleSheet.create({
-    container: {
-        borderWidth: 2,
-        borderColor: 'pink',
-        height: '50%',
-        width: '100%',
-        marginTop: 50,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    redBox: {
-        width: 70,
-        height: 70,
-        backgroundColor: 'crimson',
-        borderRadius: 20
-    }
-})

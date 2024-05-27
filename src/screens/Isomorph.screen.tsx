@@ -4,6 +4,7 @@ import { styles } from "../styles/styles";
 
 import { RenderMap } from "../components/RenderMap";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { DraggableBox } from "../components/DraggableBox";
 
 interface IsomorphProps {
     navigation: any;
@@ -31,7 +32,9 @@ export const Isomorph: React.FC<IsomorphProps> = ({ navigation }) => {
 
     return (
         <Layout style={styles.containerCentered}>
-            <RenderMap />
+            <DraggableBox>
+                <RenderMap />
+            </DraggableBox>
         </Layout>
     );
 };
