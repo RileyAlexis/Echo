@@ -1,6 +1,6 @@
 import React, { ReactElement, ReactNode, useState } from "react";
 import { View, Image, StyleSheet, Dimensions, ImageSourcePropType } from 'react-native';
-import { groundMap01, groundMap02 } from "../modules/terrain";
+import { groundMap01, groundMap02, buildingMap01 } from "../modules/terrain";
 import { Button, Layout, Text } from "@ui-kitten/components";
 
 import Animated, { useSharedValue, withSpring } from 'react-native-reanimated';
@@ -28,6 +28,8 @@ const PlaceTile: React.FC<PlaceTileProps> = ({ zIndex, source, position }): Reac
     const isoY = (position.x + position.y) * tileHeight; // Half the height of your tiles
     const zHeight = zIndex === 1 ? tileHeight * 4 : tileHeight * 2;
 
+    // { console.log('zIndex', zHeight) }
+
     if (source !== null) {
         return (
             <View style={[styles.layer,
@@ -39,13 +41,10 @@ const PlaceTile: React.FC<PlaceTileProps> = ({ zIndex, source, position }): Reac
                 width: tileWidth * 2
             }]
             }>
-                {/* {console.log('Position:', position.x, '-', position.y)}
-                {console.log('ISO:', isoX, '-', isoY)} */}
 
-                {console.log('zIndex', zHeight)}
-                {zIndex === 0 &&
+                {/* {zIndex === 0 &&
                     <Text category="h3" style={styles.console}>{`${position.x}-${position.y}`}</Text>
-                }
+                } */}
                 <Image source={source} style={{ height: zHeight, width: tileWidth * 2 }} />
             </View>
         )
@@ -61,6 +60,10 @@ export const RenderMap: React.FC = () => {
     const grass = require('../../assets/tiles/tilable-IMG_0044-grey.png');
     const rock = require('../../assets/tiles/rock.png');
     const keep = require('../../assets/castlekeep_05.png');
+    const orchard = require('../../assets/orchard_02.png');
+    const house01 = require('../../assets/house_01a.png');
+    const house06 = require('../../assets/house_06a.png')
+
     const sharedWidth = useSharedValue(100);
 
     return (
@@ -76,6 +79,7 @@ export const RenderMap: React.FC = () => {
                         switch (tile) {
                             case 0: mappedTile = grass; break;
                             case 1: mappedTile = rock; break;
+                            case 2: mappedTile = orchard; break;
                         }
                         return (
                             <PlaceTile
@@ -91,6 +95,25 @@ export const RenderMap: React.FC = () => {
                 ))}
             </>
 
+            <>
+                {buildingMap01.map((building) => {
+                    let mappedBuilding: ImageSourcePropType | null = null;
+
+                    if (building.building === 'keep') mappedBuilding = keep;
+                    if (building.building === 'house01') mappedBuilding = house01;
+                    if (building.building === 'house06') mappedBuilding = house06;
+
+                    { console.log('Building:', building.y) }
+                    return (
+                        <PlaceTile
+                            key={`${building.x}-${building.y}`}
+                            zIndex={1}
+                            source={mappedBuilding}
+                            position={{ x: building.x, y: building.y }}
+                        />
+                    )
+                })}
+            </>
             {/* <PlaceTile
                 zIndex={1}
                 source={keep}
