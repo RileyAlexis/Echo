@@ -1,18 +1,49 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Text } from '@ui-kitten/components';
-import { View } from 'react-native';
-import Constants from 'expo-constants';
+import { Text, Button } from '@ui-kitten/components';
+import { StyleSheet, View } from 'react-native';
+import { Accelerometer } from 'expo-sensors';
 
-import { styles } from '../styles/styles';
-import { ScrollView } from 'react-native-gesture-handler';
+
 export const AccelerometerTester: React.FC = () => {
+
+    const [{ x, y, z }, setData] = useState({
+        x: 0, y: 0, z: 0
+    });
+
+    const [subscription, setSubscription] = useState<any>(null);
+    const _slow = () => Accelerometer.setUpdateInterval(1000);
+    const _fast = () => Accelerometer.setUpdateInterval(16);
+
+    const _subscribe = () => {
+        setSubscription(Accelerometer.addListener(setData));
+    }
+
+    const _unsubscribe = () => {
+        subscription && subscription.remove();
+        setSubscription(null);
+    }
+
+    useEffect(() => {
+        _subscribe();
+        return () => _unsubscribe();
+    }, [])
 
     return (
         <View>
-            <Text>Stuff</Text>
-            <ScrollView>
-                <Text>{Constants.systemFonts}</Text>
-            </ScrollView>
+            <Text style={styles.text}>Accelerometer: (in gs where 1g = 9.81 m/s^2)</Text>
+            <Text style={styles.text}>x: {x.toFixed(4)}</Text>
+            <Text style={styles.text}>y: {y.toFixed(4)}</Text>
+            <Text style={styles.text}>z: {z.toFixed(4)}</Text>
+            <Text>{subscription ? 'On' : 'Off'}</Text>
+            <Button onPress={_slow}>Slow</Button>
+            <Button onPress={_fast}>Fast</Button>
+
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    text: {
+        textAlign: 'center'
+    }
+})
