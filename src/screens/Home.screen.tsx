@@ -3,6 +3,7 @@ import { Layout, Divider, Button, Text, Icon, IconElement } from '@ui-kitten/com
 
 import { styles } from "../styles/styles";
 import { BasicCard } from "../components/BasicCard";
+import { AccelerometerTester } from "../components/AccelerometerTester";
 
 interface HomeScreenProps {
     navigation: any
@@ -33,27 +34,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
             </Layout> */}
 
             <Layout style={styles.containerCentered}>
-                <Text style={styles.pinkText} category='h2'>Things go Here</Text>
-                <Divider />
-                <Button
-                    accessoryLeft={homeIcon}
-                    style={{ margin: 15 }}>Home</Button>
-                <Layout level='2'>
-                    <Text category='s1'>This is some text inside another layout box which should have
-                        a different background taken from the theme</Text>
-                </Layout>
-                <Layout level='3' style={{ padding: 5, margin: 10 }}>
-                    <Text category='s1' appearance='hint'>Hint Text</Text>
-                    <Divider />
-                    <Text category='s1' appearance='alternative'>Alternative Text</Text>
-                </Layout>
-
-                <Layout level='1'
-                    style={{ flexDirection: 'row' }}
-                >
-                    <BasicCard />
-                    <BasicCard />
-                </Layout>
+                <AccelerometerTester />
             </Layout>
         </>
     )
