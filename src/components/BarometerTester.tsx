@@ -29,12 +29,12 @@ export const BarometerTester: React.FC = () => {
         return altitude;
     }
 
-    const metersToFeet = (meters) => {
+    const metersToFeet = (meters: number) => {
         const feet = meters * 3.28084;
         return feet;
     }
 
-    const hPaToInHg = (hPa) => {
+    const hPaToInHg = (hPa: number) => {
         const inHg = hPa * 0.02953;
         return inHg;
     }
