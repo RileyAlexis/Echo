@@ -14,10 +14,8 @@ export const BarometerTester: React.FC = () => {
     const [starwarsData, setStarwarsData] = useState<JSON | null>(null);
 
     useEffect(() => {
-        console.log(Platform.OS);
         Barometer.addListener(({ pressure }) => {
             setPressure(pressure);
-            console.log(pressure);
             if (Platform.OS === 'ios' || Platform.OS === 'android') {
                 const altitudeMeters = calculateAltitude(pressure);
                 setAltitudeMeters(altitudeMeters);
@@ -25,7 +23,6 @@ export const BarometerTester: React.FC = () => {
                 setInHg(hPaToInHg(pressure));
             }
         });
-
         return () => {
             Barometer.removeAllListeners();
         }
@@ -66,7 +63,6 @@ export const BarometerTester: React.FC = () => {
         }
         return null;
     }
-
 
     const handleMetar = async () => {
         await getMetar('KFCM')
