@@ -4,6 +4,7 @@ import { Layout, Divider, Button, Text, Icon, IconElement } from '@ui-kitten/com
 import { styles } from "../styles/styles";
 import { BasicCard } from "../components/BasicCard";
 import { AccelerometerTester } from "../components/AccelerometerTester";
+import { BarometerTester } from "../components/BarometerTester";
 
 interface HomeScreenProps {
     navigation: any
@@ -35,6 +36,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 
             <Layout style={styles.containerCentered}>
                 <AccelerometerTester />
+                <BarometerTester />
             </Layout>
         </>
     )
