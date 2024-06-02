@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Button, Text } from '@ui-kitten/components';
 import { Barometer } from 'expo-sensors';
+import { getMetar } from '../modules/metarAPI';
 
 export const BarometerTester: React.FC = () => {
     const [pressure, setPressure] = useState<number | null>(null);
     const [altitudeMeters, setAltitudeMeters] = useState<number | null>(null);
     const [altitudeFeet, setAltitudeFeet] = useState<number | null>(null);
     const [inHg, setInHg] = useState<number | null>(null);
+    const [metarData, setMetarData] = useState<JSON | null>(null);
 
     useEffect(() => {
         Barometer.addListener(({ pressure }) => {
@@ -39,13 +41,26 @@ export const BarometerTester: React.FC = () => {
         return inHg;
     }
 
+    const handleMetar = async () => {
+        try {
+            await getMetar('KMSP');
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     return (
         <View style={styles.container}>
             <Text style={styles.text}>Pressure: {pressure ? `${pressure.toFixed(2)} hPa` : 'N/A'}</Text>
             <Text style={styles.text}>Altitude: {altitudeMeters ? `${altitudeMeters.toFixed(2)} meters` : 'N/A'}</Text>
             <Text style={styles.text}>Pressure: {inHg ? `${inHg.toFixed(2)} inHg` : 'N/A'}</Text>
             <Text style={styles.text}>Altitude: {altitudeFeet ? `${altitudeFeet.toFixed(2)} feet` : 'N/A'}</Text>
-            <Button>Get METAR</Button>
+            <Button onPress={handleMetar}>Get METAR</Button>
+            {metarData &&
+                <Text style={styles.text}>
+                    JSON.stringify(metarData)
+                </Text>
+            }
         </View>
     )
 }
