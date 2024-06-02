@@ -9,7 +9,9 @@ export const BarometerTester: React.FC = () => {
     const [altitudeMeters, setAltitudeMeters] = useState<number | null>(null);
     const [altitudeFeet, setAltitudeFeet] = useState<number | null>(null);
     const [inHg, setInHg] = useState<number | null>(null);
-    const [metarData, setMetarData] = useState<JSON | null>(null);
+    const [metarData, setMetarData] = useState<string | null>(null);
+    const [locationPressure, setLocationPressure] = useState<number | null>(null);
+    const [starwarsData, setStarwarsData] = useState<JSON | null>(null);
 
     useEffect(() => {
         Barometer.addListener(({ pressure }) => {
@@ -41,13 +43,24 @@ export const BarometerTester: React.FC = () => {
         return inHg;
     }
 
+    const extractInHg = (metar: string): number | null => {
+        const regex = /\bA(\d{2})(\d{2})\b/;
+        const match = regex.exec(metar);
+        if (match) {
+            const pressureValue = `${match[1]}.${match[2]}`;
+            return parseFloat(pressureValue);
+        }
+        return null;
+    }
 
 
     const handleMetar = async () => {
-        await getMetar('KMSP')
+        await getMetar('KFCM')
             .then((response) => {
-                console.log(typeof response);
-                setMetarData(response);
+                console.log(response);
+                const data = extractInHg(response);
+                console.log('Data', data);
+                setLocationPressure(data);
             }).catch((error) => {
                 console.error("Error getting METAR data", error);
             })
@@ -56,7 +69,7 @@ export const BarometerTester: React.FC = () => {
     const handleStarWars = async () => {
         await getStarWars()
             .then((response) => {
-                setMetarData(response);
+                setStarwarsData(response);
             }).catch((error) => {
                 console.error('Star Wars Error', error);
             })
@@ -69,9 +82,9 @@ export const BarometerTester: React.FC = () => {
             <Text style={styles.text}>Pressure: {inHg ? `${inHg.toFixed(2)} inHg` : 'N/A'}</Text>
             <Text style={styles.text}>Altitude: {altitudeFeet ? `${altitudeFeet.toFixed(2)} feet` : 'N/A'}</Text>
             <Button onPress={handleMetar}>Get METAR</Button>
-            {metarData &&
+            {locationPressure &&
                 <Text style={styles.text}>
-                    {JSON.stringify(metarData)}
+                    {locationPressure}
                 </Text>
             }
         </View>
