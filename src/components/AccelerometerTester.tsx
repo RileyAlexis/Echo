@@ -34,10 +34,9 @@ export const AccelerometerTester: React.FC = () => {
             <Text style={styles.text}>x: {x.toFixed(4)}</Text>
             <Text style={styles.text}>y: {y.toFixed(4)}</Text>
             <Text style={styles.text}>z: {z.toFixed(4)}</Text>
-            <Text>{subscription ? 'On' : 'Off'}</Text>
+            <Text style={styles.text}>{subscription ? 'On' : 'Off'}</Text>
             <Button onPress={_slow}>Slow</Button>
             <Button onPress={_fast}>Fast</Button>
-
         </View>
     )
 }
