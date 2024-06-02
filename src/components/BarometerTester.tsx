@@ -42,11 +42,12 @@ export const BarometerTester: React.FC = () => {
     }
 
     const handleMetar = async () => {
-        try {
-            await getMetar('KMSP');
-        } catch (error) {
-            console.error(error);
-        }
+        await getMetar('KMSP')
+            .then((response) => {
+                setMetarData(response);
+            }).catch((error) => {
+                console.error("Error getting METAR data", error);
+            })
     }
 
     const handleStarWars = async () => {
@@ -64,7 +65,7 @@ export const BarometerTester: React.FC = () => {
             <Text style={styles.text}>Altitude: {altitudeMeters ? `${altitudeMeters.toFixed(2)} meters` : 'N/A'}</Text>
             <Text style={styles.text}>Pressure: {inHg ? `${inHg.toFixed(2)} inHg` : 'N/A'}</Text>
             <Text style={styles.text}>Altitude: {altitudeFeet ? `${altitudeFeet.toFixed(2)} feet` : 'N/A'}</Text>
-            <Button onPress={handleStarWars}>Get METAR</Button>
+            <Button onPress={handleMetar}>Get METAR</Button>
             {metarData &&
                 <Text style={styles.text}>
                     {JSON.stringify(metarData)}
