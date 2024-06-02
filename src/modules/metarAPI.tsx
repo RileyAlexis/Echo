@@ -1,12 +1,12 @@
 import axios from "axios";
 
-export const getMetar = async (icao: string): Promise<JSON> => {
+export const getMetar = async (icao: string): Promise<string> => {
 
     const apiURL = `https://aviationweather.gov/api/data/metar?ids=${icao}`
 
     console.log(apiURL);
 
-    return new Promise<JSON>((resolve, reject) => {
+    return new Promise<string>((resolve, reject) => {
         axios.get(apiURL)
             .then((response) => {
                 resolve(response.data);

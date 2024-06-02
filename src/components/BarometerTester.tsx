@@ -41,9 +41,12 @@ export const BarometerTester: React.FC = () => {
         return inHg;
     }
 
+
+
     const handleMetar = async () => {
         await getMetar('KMSP')
             .then((response) => {
+                console.log(typeof response);
                 setMetarData(response);
             }).catch((error) => {
                 console.error("Error getting METAR data", error);
