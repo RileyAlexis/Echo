@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Button, Text } from '@ui-kitten/components';
 import { Barometer } from 'expo-sensors';
-import { getMetar } from '../modules/metarAPI';
+import { getMetar, getStarWars } from '../modules/metarAPI';
 
 export const BarometerTester: React.FC = () => {
     const [pressure, setPressure] = useState<number | null>(null);
@@ -49,16 +49,25 @@ export const BarometerTester: React.FC = () => {
         }
     }
 
+    const handleStarWars = async () => {
+        await getStarWars()
+            .then((response) => {
+                setMetarData(response);
+            }).catch((error) => {
+                console.error('Star Wars Error', error);
+            })
+    }
+
     return (
         <View style={styles.container}>
             <Text style={styles.text}>Pressure: {pressure ? `${pressure.toFixed(2)} hPa` : 'N/A'}</Text>
             <Text style={styles.text}>Altitude: {altitudeMeters ? `${altitudeMeters.toFixed(2)} meters` : 'N/A'}</Text>
             <Text style={styles.text}>Pressure: {inHg ? `${inHg.toFixed(2)} inHg` : 'N/A'}</Text>
             <Text style={styles.text}>Altitude: {altitudeFeet ? `${altitudeFeet.toFixed(2)} feet` : 'N/A'}</Text>
-            <Button onPress={handleMetar}>Get METAR</Button>
+            <Button onPress={handleStarWars}>Get METAR</Button>
             {metarData &&
                 <Text style={styles.text}>
-                    JSON.stringify(metarData)
+                    {JSON.stringify(metarData)}
                 </Text>
             }
         </View>
