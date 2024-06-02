@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Platform } from 'react-native';
 import { Button, Text } from '@ui-kitten/components';
 import { Barometer } from 'expo-sensors';
 import { getMetar, getStarWars } from '../modules/metarAPI';
@@ -14,12 +14,16 @@ export const BarometerTester: React.FC = () => {
     const [starwarsData, setStarwarsData] = useState<JSON | null>(null);
 
     useEffect(() => {
+        console.log(Platform.OS);
         Barometer.addListener(({ pressure }) => {
             setPressure(pressure);
-            const altitudeMeters = calculateAltitude(pressure);
-            setAltitudeMeters(altitudeMeters);
-            setAltitudeFeet(metersToFeet(altitudeMeters))
-            setInHg(hPaToInHg(pressure));
+            console.log(pressure);
+            if (Platform.OS === 'ios' || Platform.OS === 'android') {
+                const altitudeMeters = calculateAltitude(pressure);
+                setAltitudeMeters(altitudeMeters);
+                setAltitudeFeet(metersToFeet(altitudeMeters))
+                setInHg(hPaToInHg(pressure));
+            }
         });
 
         return () => {
@@ -38,9 +42,19 @@ export const BarometerTester: React.FC = () => {
         return feet;
     }
 
+    const feetToMeters = (feet: number) => {
+        const meters = feet / 3.28084;
+        return meters;
+    }
+
     const hPaToInHg = (hPa: number) => {
         const inHg = hPa * 0.02953;
         return inHg;
+    }
+
+    const inHgTohPa = (inHg: number) => {
+        const hPa = inHg / 0.02953;
+        return hPa;
     }
 
     const extractInHg = (metar: string): number | null => {
@@ -57,9 +71,8 @@ export const BarometerTester: React.FC = () => {
     const handleMetar = async () => {
         await getMetar('KFCM')
             .then((response) => {
-                console.log(response);
+                setMetarData(response);
                 const data = extractInHg(response);
-                console.log('Data', data);
                 setLocationPressure(data);
             }).catch((error) => {
                 console.error("Error getting METAR data", error);
@@ -83,9 +96,16 @@ export const BarometerTester: React.FC = () => {
             <Text style={styles.text}>Altitude: {altitudeFeet ? `${altitudeFeet.toFixed(2)} feet` : 'N/A'}</Text>
             <Button onPress={handleMetar}>Get METAR</Button>
             {locationPressure &&
-                <Text style={styles.text}>
-                    {locationPressure}
-                </Text>
+                <>
+                    <Text style={styles.text}>
+                        Pressure inHg: {locationPressure}
+                    </Text>
+                    {metarData &&
+                        <Text style={styles.text}>
+                            METAR: {metarData}
+                        </Text>
+                    }
+                </>
             }
         </View>
     )
