@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Text } from '@ui-kitten/components';
+import { Button, Text } from '@ui-kitten/components';
 import { Barometer } from 'expo-sensors';
 
 export const BarometerTester: React.FC = () => {
@@ -45,6 +45,7 @@ export const BarometerTester: React.FC = () => {
             <Text style={styles.text}>Altitude: {altitudeMeters ? `${altitudeMeters.toFixed(2)} meters` : 'N/A'}</Text>
             <Text style={styles.text}>Pressure: {inHg ? `${inHg.toFixed(2)} inHg` : 'N/A'}</Text>
             <Text style={styles.text}>Altitude: {altitudeFeet ? `${altitudeFeet.toFixed(2)} feet` : 'N/A'}</Text>
+            <Button>Get METAR</Button>
         </View>
     )
 }
