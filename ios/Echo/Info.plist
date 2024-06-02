@@ -8,6 +8,8 @@
   <string>[REASON]</string>
   <key>NSSiriUsageDescription</key>
   <string>[REASON]</string>
+  <key>NSMotionUsageDescription</key>
+  <string>[REASON]</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
