@@ -41,10 +41,10 @@ export const BarometerTester: React.FC = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Pressure: {pressure ? `${pressure.toFixed(4)} hPa` : 'N/A'}</Text>
+            <Text style={styles.text}>Pressure: {pressure ? `${pressure.toFixed(2)} hPa` : 'N/A'}</Text>
             <Text style={styles.text}>Altitude: {altitudeMeters ? `${altitudeMeters.toFixed(2)} meters` : 'N/A'}</Text>
+            <Text style={styles.text}>Pressure: {inHg ? `${inHg.toFixed(2)} inHg` : 'N/A'}</Text>
             <Text style={styles.text}>Altitude: {altitudeFeet ? `${altitudeFeet.toFixed(2)} feet` : 'N/A'}</Text>
-            <Text style={styles.text}>Altitude: {inHg ? `${inHg.toFixed(2)} inHg` : 'N/A'}</Text>
         </View>
     )
 }
