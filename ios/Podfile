@@ -68,6 +68,12 @@ target 'Echo' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
+  # Enables Flipper.
+  #
+  # Note that if you have use_frameworks! enabled, Flipper will not work and
+  # you should disable these next few lines.
+  # use_flipper!()  # This line enables Flipper
+
   target 'EchoTests' do
     inherit! :complete
     # Pods for testing
