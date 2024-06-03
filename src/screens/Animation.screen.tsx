@@ -5,13 +5,15 @@ import { StyleSheet, View } from "react-native";
 
 import { BasicAnimations } from "../components/BasicAnimations";
 import { styles } from "../styles/styles";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export const AnimationScreen: React.FC = () => {
 
     return (
         <Layout style={styles.containerCentered}>
             <Layout style={local.container}>
-                <DraggableBox>
+                <BasicAnimations />
+                {/* <DraggableBox>
                     <View style={local.redBox} />
                 </DraggableBox>
                 <DraggableBox>
@@ -19,7 +21,7 @@ export const AnimationScreen: React.FC = () => {
                 </DraggableBox>
                 <DraggableBox>
                     <View style={local.redBox} />
-                </DraggableBox>
+                </DraggableBox> */}
             </Layout>
         </Layout>
     )

@@ -27,19 +27,10 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
     // }
 
     return (
-        <>
-            {/* <TopNavigation title="Echo" alignment="center" />
-            <Divider />
-            <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Button onPress={navigateSettings}>Settings</Button>
-
-            </Layout> */}
-
-            <Layout style={styles.containerCentered}>
-                <AccelerometerTester />
-                <BarometerTester />
-                <MagnetometerTester />
-            </Layout>
-        </>
+        <Layout style={styles.containerCentered}>
+            <AccelerometerTester />
+            <BarometerTester />
+            <MagnetometerTester />
+        </Layout>
     )
 }

@@ -26,10 +26,16 @@ export const BarometerTester: React.FC = () => {
         return () => {
             Barometer.removeAllListeners();
         }
-    }, [])
+    }, [pressure, locationPressure])
 
     const calculateAltitude = (pressure: number) => {
-        const seaLevelPressure = 1013.25;
+        let seaLevelPressure;
+        if (locationPressure) {
+            seaLevelPressure = inHgTohPa(locationPressure);
+        } else {
+            seaLevelPressure = 1013.25;
+        }
+
         const altitude = (1 - Math.pow(pressure / seaLevelPressure, 0.190284)) * 145366.45 * 0.3048;
         return altitude;
     }
@@ -65,7 +71,7 @@ export const BarometerTester: React.FC = () => {
     }
 
     const handleMetar = async () => {
-        await getMetar('KFCM')
+        await getMetar('KMSP')
             .then((response) => {
                 setMetarData(response);
                 const data = extractInHg(response);
@@ -96,11 +102,11 @@ export const BarometerTester: React.FC = () => {
                     <Text style={styles.text}>
                         Pressure inHg: {locationPressure}
                     </Text>
-                    {metarData &&
+                    {/* {metarData &&
                         <Text style={styles.text}>
                             METAR: {metarData}
                         </Text>
-                    }
+                    } */}
                 </>
             }
         </View>
