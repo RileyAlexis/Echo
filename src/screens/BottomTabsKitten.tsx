@@ -2,14 +2,16 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { BottomNavigation, BottomNavigationTab, Text } from "@ui-kitten/components";
-
-import { HomeScreen } from "./Home.screen";
-import { Isomorph } from "./Isomorph.screen";
 import { NavigationContainer } from "@react-navigation/native";
 
-import { styles } from "../styles/styles";
-import { VoiceScreen } from "./Voice.screens";
+//Screens
+import { HomeScreen } from "./Home.screen";
+import { Isomorph } from "./Isomorph.screen";
 import { AnimationScreen } from "./Animation.screen";
+import { VoiceScreen } from "./Voice.screens";
+import { PhysicsScreen } from "./Physics.screen";
+
+import { styles } from "../styles/styles";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -26,8 +28,9 @@ const BottomTabBar: React.FC<BottomTabBarProps> = ({ navigation, state }) => (
         style={styles.bottomTabs}
     >
         <BottomNavigationTab title={evaProps => <Text {...evaProps}>Home</Text>} />
-        <BottomNavigationTab title="Isomorph" />
-        <BottomNavigationTab title="Voice" />
+        {/* <BottomNavigationTab title="Isomorph" /> */}
+        {/* <BottomNavigationTab title="Voice" /> */}
+        <BottomNavigationTab title="Physics" />
         <BottomNavigationTab title="Animation" />
     </BottomNavigation>
 )
@@ -37,8 +40,9 @@ const TabNavigator = () => (
         screenOptions={{ headerShown: false }}
     >
         <Screen name="Home" component={HomeScreen} />
-        <Screen name="Isomorph" component={Isomorph} />
-        <Screen name="Voice" component={VoiceScreen} />
+        {/* <Screen name="Isomorph" component={Isomorph} /> */}
+        {/* <Screen name="Voice" component={VoiceScreen} /> */}
+        <Screen name="Physics" component={PhysicsScreen} />
         <Screen name="Animation" component={AnimationScreen} />
     </Navigator >
 );

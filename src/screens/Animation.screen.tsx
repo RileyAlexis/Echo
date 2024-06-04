@@ -13,17 +13,17 @@ export const AnimationScreen: React.FC = () => {
     return (
         <Layout style={styles.containerCentered}>
             <Layout style={local.container}>
-                <MatterScene />
+                {/* <MatterScene /> */}
                 {/* <BasicAnimations /> */}
-                {/* <DraggableBox>
-                    <View style={local.redBox} />
-                </DraggableBox>
                 <DraggableBox>
                     <View style={local.redBox} />
                 </DraggableBox>
                 <DraggableBox>
+                    <View style={local.greenBox} />
+                </DraggableBox>
+                <DraggableBox>
                     <View style={local.redBox} />
-                </DraggableBox> */}
+                </DraggableBox>
             </Layout>
         </Layout>
     )
@@ -43,6 +43,12 @@ const local = StyleSheet.create({
         width: 120,
         height: 120,
         backgroundColor: 'crimson',
-        borderRadius: 20
+        borderRadius: 40
+    },
+    greenBox: {
+        width: 120,
+        height: 120,
+        backgroundColor: '#60ff47',
+        borderRadius: 75
     }
 })
