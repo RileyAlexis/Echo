@@ -44,7 +44,7 @@ export const BasicAnimations: React.FC = () => {
 
     const moveLeft = () => {
         translateX.value = withSpring(translateX.value - 50);
-        // translateX.value = withTiming(translateX.value - 50);
+        // translateX.value = withTiming(translateX.value - 50)
     }
 
     const shakeTheBox = () => {

@@ -28,9 +28,9 @@ const BottomTabBar: React.FC<BottomTabBarProps> = ({ navigation, state }) => (
         style={styles.bottomTabs}
     >
         <BottomNavigationTab title={evaProps => <Text {...evaProps}>Home</Text>} />
-        {/* <BottomNavigationTab title="Isomorph" /> */}
-        {/* <BottomNavigationTab title="Voice" /> */}
-        <BottomNavigationTab title="Physics" />
+        <BottomNavigationTab title="Isomorph" />
+        <BottomNavigationTab title="Voice" />
+        {/* <BottomNavigationTab title="Physics" /> */}
         <BottomNavigationTab title="Animation" />
     </BottomNavigation>
 )
@@ -40,9 +40,9 @@ const TabNavigator = () => (
         screenOptions={{ headerShown: false }}
     >
         <Screen name="Home" component={HomeScreen} />
-        {/* <Screen name="Isomorph" component={Isomorph} /> */}
-        {/* <Screen name="Voice" component={VoiceScreen} /> */}
-        <Screen name="Physics" component={PhysicsScreen} />
+        <Screen name="Isomorph" component={Isomorph} />
+        <Screen name="Voice" component={VoiceScreen} />
+        {/* <Screen name="Physics" component={PhysicsScreen} /> */}
         <Screen name="Animation" component={AnimationScreen} />
     </Navigator >
 );
