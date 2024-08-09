@@ -10,6 +10,7 @@ import { Isomorph } from "./Isomorph.screen";
 import { AnimationScreen } from "./Animation.screen";
 import { VoiceScreen } from "./Voice.screens";
 import { PhysicsScreen } from "./Physics.screen";
+import { MappingScreen } from "./Mapping.screen";
 
 import { styles } from "../styles/styles";
 
@@ -28,6 +29,7 @@ const BottomTabBar: React.FC<BottomTabBarProps> = ({ navigation, state }) => (
         style={styles.bottomTabs}
     >
         <BottomNavigationTab title={evaProps => <Text {...evaProps}>Home</Text>} />
+        <BottomNavigationTab title="Map" />
         <BottomNavigationTab title="Isomorph" />
         <BottomNavigationTab title="Voice" />
         {/* <BottomNavigationTab title="Physics" /> */}
@@ -40,6 +42,7 @@ const TabNavigator = () => (
         screenOptions={{ headerShown: false }}
     >
         <Screen name="Home" component={HomeScreen} />
+        <Screen name="Map" component={MappingScreen} />
         <Screen name="Isomorph" component={Isomorph} />
         <Screen name="Voice" component={VoiceScreen} />
         {/* <Screen name="Physics" component={PhysicsScreen} /> */}
