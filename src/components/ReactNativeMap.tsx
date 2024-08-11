@@ -4,6 +4,7 @@ import MapView, { Marker, PROVIDER_DEFAULT, UrlTile } from 'react-native-maps';
 import { Layout, Icon, Button } from '@ui-kitten/components';
 import { styles } from '../styles/styles';
 import { LocationObject } from 'expo-location';
+import { BathroomType } from '../types/interfaces';
 
 
 type ReactNativeMapProps = {
@@ -14,6 +15,8 @@ export const ReactNativeMap: React.FC<ReactNativeMapProps> = ({ location }) => {
 
     const mapRef = useRef<MapView>(null);
     const [tintColor, setTintColor] = useState<string>('#FF00FF');
+    const [bathrooms, setBathrooms] = useState<BathroomType[] | null>(null);
+    let bathroomDetailsArray: BathroomType[] | null = null;
 
     useEffect(() => {
         const pink = '#FF00FF';
@@ -42,6 +45,37 @@ export const ReactNativeMap: React.FC<ReactNativeMapProps> = ({ location }) => {
             longitudeDelta: 0.002
         })
     }
+    useEffect(() => {
+        const getBathroomData = () => {
+            fetch('http://192.168.50.148:5001/api/bathroomsRequest/')
+                .then(response => response.json())
+                .then(data => {
+                    setBathrooms(data);
+                    bathroomDetailsArray = data;
+                    // console.log(data[0]);
+                }).catch(error => {
+                    console.error(error);
+                })
+        }
+        getBathroomData();
+    }, []);
+
+    useEffect(() => {
+        if (bathrooms !== null) {
+            console.log(bathrooms[0]);
+        } else {
+            console.log('Null');
+        }
+
+        if (bathroomDetailsArray !== null) {
+            console.log(bathroomDetailsArray[0]);
+        } else {
+            console.log('Non-state var null');
+        }
+    }, [bathrooms, bathroomDetailsArray])
+
+
+
 
     return (
         <Layout style={styles.containerCentered}>
@@ -68,6 +102,17 @@ export const ReactNativeMap: React.FC<ReactNativeMapProps> = ({ location }) => {
                     maximumZ={19}
                     flipY={false}
                 />
+                {bathrooms?.map((item, index) => (
+                    <Marker
+                        key={index}
+                        title={item.name}
+                        pinColor='#d20356'
+                        coordinate={{ latitude: item.latitude, longitude: item.longitude }}
+                        identifier={item.api_id}
+                        opacity={0.8}
+                    />
+                ))
+                }
                 <Pressable
                     style={{
                         position: 'absolute',

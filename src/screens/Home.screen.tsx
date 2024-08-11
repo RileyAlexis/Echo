@@ -26,7 +26,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         console.log('Fetch function called');
         fetch('http://192.168.50.148:5001/')
             .then((response) => {
-                console.log(response);
+                // console.log(response);
             }).catch((error) => {
                 console.error(error);
             })
