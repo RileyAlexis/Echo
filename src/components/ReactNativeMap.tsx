@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Pressable, StyleSheet, TouchableOpacity, View } from 'react-native';
 import MapView, { Marker, PROVIDER_DEFAULT, UrlTile } from 'react-native-maps';
 import { Layout, Icon, Button } from '@ui-kitten/components';
 import { styles } from '../styles/styles';
 import { LocationObject } from 'expo-location';
-import { LatLng } from 'react-native-maps';
 
 
 type ReactNativeMapProps = {
@@ -69,7 +68,7 @@ export const ReactNativeMap: React.FC<ReactNativeMapProps> = ({ location }) => {
                     maximumZ={19}
                     flipY={false}
                 />
-                <TouchableOpacity
+                <Pressable
                     style={{
                         position: 'absolute',
                         bottom: 20,
@@ -82,11 +81,11 @@ export const ReactNativeMap: React.FC<ReactNativeMapProps> = ({ location }) => {
                     onPress={centerMapOnUser}
                 >
                     <Icon
-                        name='pin-outline'
-                        fill='#007AFF'
+                        name="pin-outline"
+                        fill='#007BFF'
                         style={{ width: 30, height: 30 }}
                     />
-                </TouchableOpacity>
+                </Pressable>
 
             </MapView>
         </Layout>
