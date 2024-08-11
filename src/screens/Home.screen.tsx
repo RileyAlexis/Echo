@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Layout, Divider, Button, Text, Icon, IconElement } from '@ui-kitten/components';
 
 import { styles } from "../styles/styles";
@@ -22,9 +22,15 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         );
     };
 
-    // const navigateSettings = () => {
-    //     navigation.navigate('Settings');
-    // }
+    useEffect(() => {
+        console.log('Fetch function called');
+        fetch('http://192.168.50.148:5001/')
+            .then((response) => {
+                console.log(response);
+            }).catch((error) => {
+                console.error(error);
+            })
+    }, [])
 
     return (
         <Layout style={styles.containerCentered}>
