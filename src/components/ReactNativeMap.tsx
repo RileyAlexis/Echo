@@ -6,7 +6,6 @@ import { styles } from '../styles/styles';
 import { LocationObject } from 'expo-location';
 import { BathroomType } from '../types/interfaces';
 
-
 type ReactNativeMapProps = {
     location: LocationObject
 }
@@ -17,6 +16,7 @@ export const ReactNativeMap: React.FC<ReactNativeMapProps> = ({ location }) => {
     const [tintColor, setTintColor] = useState<string>('#FF00FF');
     const [bathrooms, setBathrooms] = useState<BathroomType[] | null>(null);
     let bathroomDetailsArray: BathroomType[] | null = null;
+    // const toiletIcon = require('../../assets/toilet-marker.png');
 
     useEffect(() => {
         const pink = '#FF00FF';
@@ -82,6 +82,12 @@ export const ReactNativeMap: React.FC<ReactNativeMapProps> = ({ location }) => {
             <MapView
                 ref={mapRef}
                 style={{ ...StyleSheet.absoluteFillObject }}
+                initialRegion={{
+                    latitude: location?.coords.latitude,
+                    longitude: location?.coords.longitude,
+                    latitudeDelta: 0.002,
+                    longitudeDelta: 0.002
+                }}
                 showsUserLocation={true}
                 showsBuildings={true}
                 showsMyLocationButton={true}
@@ -110,6 +116,8 @@ export const ReactNativeMap: React.FC<ReactNativeMapProps> = ({ location }) => {
                         coordinate={{ latitude: item.latitude, longitude: item.longitude }}
                         identifier={item.api_id}
                         opacity={0.8}
+                        image={{ uri: 'toilet-marker', width: 15, height: 15, scale: 1 }}
+                        style={{ width: 15, height: 15 }}
                     />
                 ))
                 }
