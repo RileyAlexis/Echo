@@ -13,6 +13,7 @@ import { PhysicsScreen } from "./Physics.screen";
 import { MappingScreen } from "./Mapping.screen";
 
 import { styles } from "../styles/styles";
+import { CanvasScreen } from "./Canvas.screen";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -32,6 +33,7 @@ const BottomTabBar: React.FC<BottomTabBarProps> = ({ navigation, state }) => (
         <BottomNavigationTab title="Map" />
         <BottomNavigationTab title="Isomorph" />
         <BottomNavigationTab title="Voice" />
+        <BottomNavigationTab title="Canvas" />
         {/* <BottomNavigationTab title="Physics" /> */}
         <BottomNavigationTab title="Animation" />
     </BottomNavigation>
@@ -45,6 +47,7 @@ const TabNavigator = () => (
         <Screen name="Map" component={MappingScreen} />
         <Screen name="Isomorph" component={Isomorph} />
         <Screen name="Voice" component={VoiceScreen} />
+        <Screen name="Canvas" component={CanvasScreen} />
         {/* <Screen name="Physics" component={PhysicsScreen} /> */}
         <Screen name="Animation" component={AnimationScreen} />
     </Navigator >

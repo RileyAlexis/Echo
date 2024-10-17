@@ -36,7 +36,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         <Layout style={styles.containerCentered}>
             {/* <AccelerometerTester /> */}
             <BarometerTester />
-            {/* <MagnetometerTester /> */}
+            <MagnetometerTester />
         </Layout>
     )
 }

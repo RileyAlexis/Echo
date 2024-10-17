@@ -134,8 +134,8 @@ export const ReactNativeMap: React.FC<ReactNativeMapProps> = ({ location }) => {
                     onPress={centerMapOnUser}
                 >
                     <Icon
-                        name="pin-outline"
-                        fill='#007BFF'
+                        name="arrow-circle-down-outline"
+                        fill='#0058B7'
                         style={{ width: 30, height: 30 }}
                     />
                 </Pressable>
